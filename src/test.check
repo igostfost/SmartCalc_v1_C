@@ -1,0 +1,831 @@
+#include <stdio.h>
+#include <math.h>
+
+#include "s21_calc.h"
+
+
+#test calc_0
+  char* string = "7";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 7;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_1
+  char* string = "3+7";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 3 + 7;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_2
+  char* string = "3*2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 3 * 2;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_3
+  char* string = "4/4";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 4 / 4;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_4
+  char* string = "12-2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 12 - 2;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_5
+  char* string = "2mod2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = fmod(2, 2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+  #test calc_5_1
+  char* string = "mo";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_6
+  char* string = "2^2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = pow(2, 2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_7
+  char* string = "-2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = -2;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_8
+  char* string = "+2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = +2;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_9
+  char* string = "(2 + 2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = (2 + 2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_10
+  char* string = "sin(2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = sin(2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_11
+  char* string = "cos(2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = cos(2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+  #test calc_11_2
+  char* string = "co";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_12
+  char* string = "tan(2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = tan(2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+  #test calc_12_1
+  char* string = "ta";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_13
+  char* string = "asin(0.2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = asin(0.2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_14
+  char* string = "acos(0.2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = acos(0.2);
+  //ck_assert_double_eq(answer, calc_answer);
+  ck_assert_double_eq_tol(answer, calc_answer,TOL);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_15
+  char* string = "atan(2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = atan(2);
+  //ck_assert_double_eq(answer, calc_answer);
+  ck_assert_double_eq_tol(answer, calc_answer,TOL);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_16
+  char* string = "ln(2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = log(2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_17
+  char* string = "log(2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = log10(2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_18
+  char* string = "sqrt(2)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = sqrt(2);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_19
+  char* string = "5 - 6 * (20 + cos(5/19)^3 + 0.123)";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 5 - 6 * (20 + pow(cos((double)5 / 19), 3) + 0.123);
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_20
+  char* string = "son2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_21
+  char* string = "cis2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_22
+  char* string = "tnn2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_23
+  char* string = "asiv0.2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_24
+  char* string = "acas0.2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_25
+  char* string = "ataw2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_26
+  char* string = "lo2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_27
+  char* string = "lop2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_28
+  char* string = "sqrl2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_29
+  char* string = "";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_30
+  char* string = " ";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_31
+  char* string = "mer";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_32
+  char* string = "1.m";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_33
+  char* string = "afol";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_34
+  char* string = "asin(2)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_35
+  char* string = "acos(2)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_36
+  char* string = "ln(-2)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_37
+  char* string = "log(-2)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_38
+  char* string = "sqrt(-2)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_39
+  char* string = "2/0";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_40
+  char* string = "2mod0";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_41
+  char* string = "n";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_42
+  char* string = "x";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 0);
+
+
+#test calc_43
+  char* string = "()0";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_44
+  char* string = ")(3";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_45
+  char* string = "*4";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_46
+  char* string = "5cos(1)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_47
+  char* string = "4+";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_48
+  char* string = "x(56)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_49
+  char* string = "x(5**6)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_50
+  char* string = "() * 4)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_51
+  char* string = "()( - 4)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_52
+  char* string = "5 * )";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_53
+  char* string = "4 * ()";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_54
+  char* string = "5)(5 + 3)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_55
+  char* string = "x + 2";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 4, massive_x, massive_y, -500, 499);
+  ck_assert_int_eq(error, 0);
+  ck_assert_double_eq(calc_answer, 6);
+
+
+#test calc_56
+  char* string = "5 / x";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -500, 499);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_57
+  char* string = "5)";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -500, 499);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_58
+  char* string = "acos-5";
+  int error;
+  double calc_answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  ck_assert_int_eq(error, 1);
+
+
+#test calc_59
+  char* string = "3*2+10-2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 3 * 2 + 10 - 2;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+#test calc_60
+  char* string = "3*2+cos(1)-2";
+  int error;
+  double calc_answer;
+  double answer;
+  double massive_x[1000];
+  double massive_y[1000];
+  error = s21_calculate_result(string, &calc_answer, 0, massive_x, massive_y, -1, 1);
+  answer = 3*2+cos(1)-2;
+  ck_assert_double_eq(answer, calc_answer);
+  ck_assert_int_eq(error, 0);
+
+  #test credit_1
+
+  double credit_sum = 120000;
+  double percent = 15;
+  double credit_time = 12;
+  int type_payment = 0;
+
+  double total_payment;
+  double first_payment;
+  double last_payment;
+  double overpayment;
+ calculate_credit(credit_sum,credit_time, percent,
+                      type_payment, &first_payment,
+                      &last_payment, &overpayment,
+                      &total_payment);
+ck_assert_double_eq_tol(10830.997481, first_payment,TOL);
+
+#test credit_2
+
+  double credit_sum = 120000;
+  double percent = 15;
+  double credit_time = 12;
+  int type_payment = 0;
+
+  double total_payment;
+  double first_payment;
+  double last_payment;
+  double overpayment;
+ calculate_credit(credit_sum,credit_time, percent,
+                      type_payment, &first_payment,
+                      &last_payment, &overpayment,
+                      &total_payment);
+ck_assert_double_eq_tol(9971.969777, overpayment,TOL);
+
+
+#test credit_3
+
+  double credit_sum = 120000;
+  double percent = 15;
+  double credit_time = 12;
+  int type_payment = 0;
+
+  double total_payment;
+  double first_payment;
+  double last_payment;
+  double overpayment;
+ calculate_credit(credit_sum,credit_time, percent,
+                      type_payment, &first_payment,
+                      &last_payment, &overpayment,
+                      &total_payment);
+ck_assert_double_eq_tol(129971.969777, total_payment,TOL);
+
+  #test credit_4
+  double credit_sum = 120000;
+  double percent = 15;
+  double credit_time = 12;
+  int type_payment = 1;
+
+  double total_payment;
+  double first_payment;
+  double last_payment;
+  double overpayment;
+ calculate_credit(credit_sum,credit_time, percent,
+                      type_payment, &first_payment,
+                      &last_payment, &overpayment,
+                      &total_payment);
+ck_assert_double_eq_tol(11528.767123, first_payment,TOL);
+
+ #test credit_5
+  double credit_sum = 120000;
+  double percent = 15;
+  double credit_time = 12;
+  int type_payment = 1;
+
+  double total_payment;
+  double first_payment;
+  double last_payment;
+  double overpayment;
+ calculate_credit(credit_sum,credit_time, percent,
+                      type_payment, &first_payment,
+                      &last_payment, &overpayment,
+                      &total_payment);
+ck_assert_double_eq_tol(10127.397260, last_payment,TOL);
+
+#test credit_6
+
+  double credit_sum = 120000;
+  double percent = 15;
+  double credit_time = 12;
+  int type_payment = 1;
+
+  double total_payment;
+  double first_payment;
+  double last_payment;
+  double overpayment;
+ calculate_credit(credit_sum,credit_time, percent,
+                      type_payment, &first_payment,
+                      &last_payment, &overpayment,
+                      &total_payment);
+ck_assert_double_eq_tol(9710.958904, overpayment,TOL);
+
+#test credit_7
+
+  double credit_sum = 120000;
+  double percent = 15;
+  double credit_time = 12;
+  int type_payment = 1;
+
+  double total_payment;
+  double first_payment;
+  double last_payment;
+  double overpayment;
+ calculate_credit(credit_sum,credit_time, percent,
+                      type_payment, &first_payment,
+                      &last_payment, &overpayment,
+                      &total_payment);
+ck_assert_double_eq_tol(129710.958904, total_payment,TOL);
+
